@@ -1,18 +1,46 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
+import { SQLiteProvider } from 'expo-sqlite';
+import { StatusBar } from 'expo-status-bar';
+import { LogBox, useColorScheme } from 'react-native';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+import { Cores } from '@/constants/tema';
+import { AppProvider } from '@/context/app-context';
+import { migrarBanco, NOME_BANCO } from '@/db/banco';
 
-SplashScreen.preventAutoHideAsync();
+// Notificações LOCAIS funcionam no Expo Go; o aviso é sobre notificações push, que o app não usa.
+LogBox.ignoreLogs(['expo-notifications', '[expo-notifications]']);
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function RootLayout() {
+  const escuro = useColorScheme() === 'dark';
+  const cores = escuro ? Cores.escuro : Cores.claro;
+  const base = escuro ? DarkTheme : DefaultTheme;
+  const tema = {
+    ...base,
+    colors: {
+      ...base.colors,
+      primary: cores.primaria,
+      background: cores.fundo,
+      card: cores.superficie,
+      text: cores.texto,
+      border: cores.borda,
+    },
+  };
+
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
+    <SQLiteProvider databaseName={NOME_BANCO} onInit={migrarBanco}>
+      <AppProvider>
+        <ThemeProvider value={tema}>
+          <StatusBar style={escuro ? 'light' : 'dark'} />
+          <Stack screenOptions={{ headerBackTitle: 'Voltar', headerTitleStyle: { fontWeight: '700' } }}>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="zona/[id]" options={{ title: 'Detalhes do local' }} />
+            <Stack.Screen
+              name="relato/novo"
+              options={{ title: 'Novo relato', presentation: 'modal' }}
+            />
+          </Stack>
+        </ThemeProvider>
+      </AppProvider>
+    </SQLiteProvider>
   );
 }

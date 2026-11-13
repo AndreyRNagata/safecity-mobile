@@ -1,18 +1,18 @@
 {
   "expo": {
-    "name": "safecity-mobile",
-    "slug": "safecity-mobile",
+    "name": "SafeCity",
+    "slug": "safecity",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "safecitymobile",
+    "scheme": "safecity",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#1D4ED8",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
@@ -20,7 +20,7 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "output": "server",
+      "output": "single",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
@@ -28,15 +28,23 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
+          "backgroundColor": "#1D4ED8",
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
+        }
+      ],
+      "expo-sqlite",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "O SafeCity usa sua localização, apenas no aparelho, para avisar quando você estiver em um ponto com alto risco de furto de celular."
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "description": "Alerta preventivo de furto de celular e guia da Hora de Ouro (GS FIAP 2026 - CitizenTech)."
   }
 }

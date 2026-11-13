@@ -41,3 +41,7 @@ example
 # generated native folders
 /ios
 /android
+
+# variáveis locais e banco do mock
+.env
+mock-api/db.local.json
