@@ -34,7 +34,7 @@ Global Solution FIAP 2026.2 — disciplina **Mobile Development & IoT**.
 
 ### Vídeo (até 3 min)
 
-Arquivo do enviado no teams
+https://youtube.com/shorts/evbYlH48gwg
 
 ---
 
